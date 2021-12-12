@@ -1,0 +1,41 @@
+package com.example.rest.webservices.restfulwebservices.user;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class UserResource {
+	
+	@Autowired
+	private UserDaoService service;
+
+	//GET /users ---- Retrieve all users
+	@GetMapping("/users")
+	public List<User> retrieveAllUsers() {
+		
+		return service.getAllUsers();
+		
+	}
+	
+	//GET /users/{id} ----- retrieve a specific user
+	@GetMapping("/users/{id}")
+	public User findUser(@PathVariable int id) {
+		
+		return service.findUser(id);
+		
+	}
+	
+	//POST /user ---- Create a new user
+	@PostMapping("/user")
+	public User createUser(@RequestBody User user) {
+		
+		return service.saveUser(user);
+	}
+	
+}
