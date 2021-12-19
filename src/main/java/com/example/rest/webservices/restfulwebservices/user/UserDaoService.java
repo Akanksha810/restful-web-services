@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 public class UserDaoService {
 
 	private static List<User> users = new ArrayList<>();
+	private static List<Post> posts = new ArrayList<>();
 	private static int userCount = 3;
 	
 	static {
@@ -18,6 +19,16 @@ public class UserDaoService {
 		users.add(new User(1, "Akanksha", new Date()));
 		users.add(new User(2, "Biswajit", new Date()));
 		users.add(new User(3, "Chipmunk", new Date()));
+		
+		posts.add(new Post(1, "It's me, Akanksha!"));
+		posts.add(new Post(1, "Hello There!"));
+		posts.add(new Post(2, "It's me, Biswajit!"));
+		posts.add(new Post(2, "Hi There!"));
+		posts.add(new Post(2, "What's up?"));
+		posts.add(new Post(3, "It's me, Chipmunk!"));
+		posts.add(new Post(3, "Yo!"));
+		posts.add(new Post(3, "Wassup?"));
+		posts.add(new Post(3, "Bruh!"));
 		
 	}
 	
@@ -49,6 +60,23 @@ public class UserDaoService {
 		}
 		
 		return null;
+	}
+
+	public List<Post> getAllPosts(int id) {
+		
+		List<Post> userPosts = new ArrayList<>();
+		
+		for(Post post : posts) {
+			
+			if(post.getUserId() == id) {
+				
+				userPosts.add(post);
+				
+			}
+			
+		}
+		
+		return userPosts;
 	}
 	
 }
