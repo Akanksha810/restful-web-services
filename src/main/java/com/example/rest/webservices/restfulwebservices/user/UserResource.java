@@ -1,5 +1,8 @@
 package com.example.rest.webservices.restfulwebservices.user;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +10,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +37,7 @@ public class UserResource {
 	
 	//GET /users/{id} ----- retrieve a specific user
 	@GetMapping("/users/{id}")
-	public User findUser(@PathVariable int id) {
+	public EntityModel<User> findUser(@PathVariable int id) {
 		
 		User findUser = service.findUser(id);
 		
@@ -42,7 +47,12 @@ public class UserResource {
 			
 		}
 		
-		return findUser;
+		EntityModel<User> model = EntityModel.of(findUser);
+		
+		WebMvcLinkBuilder linkToUsers = linkTo(methodOn(this.getClass()).retrieveAllUsers());
+		model.add(linkToUsers.withRel("all-users"));
+		
+		return model;
 		
 	}
 	
